@@ -2,11 +2,10 @@ import Testing
 @testable import MojiPicker
 
 @Test func emojiLoads() throws {
-    // todo)) should i put "comment" parameters in the expectations and requirements?
     let emojis = try loadEmojis()
     
     // check a specific emoji
-    let smiley = #require(emojis.first(where: { $0.symbol == "😀" }))
-    #expect(smiley.description == "grinning face")
-    #expect(smiley.aliases.contains("grinning"))
+    let smiley = try #require(emojis.first(where: { $0.symbol == "😀" }), "ensure it loaded the grinning face emoji")
+    #expect(smiley.description == "grinning face", "check that the description property was set properly")
+    #expect(smiley.aliases.contains("grinning"), "check that the aliases property was set properly")
 }
