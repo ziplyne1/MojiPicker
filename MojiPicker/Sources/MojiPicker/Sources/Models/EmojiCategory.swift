@@ -1,4 +1,4 @@
-enum EmojiCategory: String {
+enum EmojiCategory: String, Decodable, CaseIterable {
     case smileys = "Smileys & Emotion"
     case people = "People & Body"
     case nature = "Animals & Nature"
