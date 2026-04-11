@@ -5,7 +5,7 @@ enum EmojiLoaderError: Error {
     case decodingFailed
 }
 
-func loadEmojis() throws -> [EmojiCategory: [Emoji]] {
+func loadEmojis() throws -> [Emoji] {
     // load the file
     guard let url = Bundle.module.url(forResource: "emoji", withExtension: "json") else {
         throw EmojiLoaderError.fileNotFound
@@ -13,12 +13,7 @@ func loadEmojis() throws -> [EmojiCategory: [Emoji]] {
     let data = try Data(contentsOf: url)
     
     // parse
-    var emojisByCategory: [EmojiCategory: [Emoji]] = [:]
-    
     let emojis = try JSONDecoder().decode([Emoji].self, from: data)
-    for emoji in emojis {
-        emojisByCategory[emoji.category, default: []].append(emoji)
-    }
     
-    return emojisByCategory
+    return emojis
 }
