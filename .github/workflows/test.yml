@@ -14,3 +14,4 @@ jobs:
           xcode-version: latest-stable
       - name: Run tests
         run: swift test
+        working-directory: MojiPicker
