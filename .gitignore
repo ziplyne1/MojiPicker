@@ -5,6 +5,5 @@ xcuserdata/
 *.xcworkspace/xcuserdata/
 *.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 DerivedData/
-MojiPicker/.swiftpm/configuration/registries.json
-MojiPicker/.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+MojiPicker/.swiftpm/
 .netrc
