@@ -5,5 +5,5 @@ xcuserdata/
 *.xcworkspace/xcuserdata/
 *.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 DerivedData/
-MojiPicker/.swiftpm/
+.swiftpm/
 .netrc
