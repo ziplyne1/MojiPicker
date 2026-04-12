@@ -101,7 +101,6 @@
 			mainGroup = 532B8B402F8B778E00DF9424;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				532B8B7E2F8B799D00DF9424 /* XCLocalSwiftPackageReference "../MojiPicker" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 532B8B4A2F8B778E00DF9424 /* Products */;
@@ -354,13 +353,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		532B8B7E2F8B799D00DF9424 /* XCLocalSwiftPackageReference "../MojiPicker" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../MojiPicker;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		532B8B7F2F8B799D00DF9424 /* MojiPicker */ = {
