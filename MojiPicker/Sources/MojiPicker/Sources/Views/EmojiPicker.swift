@@ -50,9 +50,11 @@ public struct EmojiPicker: View {
         Button {
             selectedEmoji = emoji
         } label: {
+            // fixme)) the emojis aren't centered, they're slightly left
             Text(emoji.symbol)
                 .padding(5)
                 .font(.system(size: 48))
+                .scaleEffect((emoji == selectedEmoji) ? 1.5 : 1)
                 .overlay(Circle().stroke(((emoji == selectedEmoji) ? Color.accentColor : Color.clear), lineWidth: 2))
         }
     }
@@ -84,5 +86,12 @@ public struct EmojiPicker: View {
                     EmojiPicker(selectedEmoji: $selectedEmoji)
                 }
             }
+    }
+}
+
+#Preview {
+    @Previewable @State var selectedEmoji: Emoji? = nil
+    NavigationStack {
+        EmojiPicker(selectedEmoji: $selectedEmoji)
     }
 }
