@@ -3,14 +3,14 @@ import SwiftUI
 public struct EmojiPicker: View {
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var selectedEmoji: Emoji?
+    @Binding private var selectedEmoji: Emoji?
     
     private let emojis: [Emoji]
     @State private var categorySelection: EmojiCategory = .smileys
     @State private var searchText: String = ""
     @State private var error: Error? = nil
         
-    init(selectedEmoji: Binding<Emoji?>) {
+    public init(selectedEmoji: Binding<Emoji?>) {
         self._selectedEmoji = selectedEmoji
         do {
             self.emojis = try loadEmojis()
@@ -20,7 +20,7 @@ public struct EmojiPicker: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 55))]) {
                 ForEach(emojis, id:\.description) { emoji in
