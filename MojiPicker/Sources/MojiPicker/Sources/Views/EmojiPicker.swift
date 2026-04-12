@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct EmojiPicker: View {
+public struct EmojiPicker: View {
     @Environment(\.dismiss) private var dismiss
     
     @Binding var selectedEmoji: Emoji?
