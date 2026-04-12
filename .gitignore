@@ -1,8 +1,10 @@
 .DS_Store
-/.build
-/Packages
+.build
+Packages
 xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 DerivedData/
-.swiftpm/configuration/registries.json
-.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+MojiPicker/.swiftpm/configuration/registries.json
+MojiPicker/.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
