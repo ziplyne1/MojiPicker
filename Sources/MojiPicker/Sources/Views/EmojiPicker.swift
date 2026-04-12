@@ -1,15 +1,17 @@
 import SwiftUI
 
-@Observable
-class EmojiPickerViewModel {
-    let emojis: [Emoji]
-    var categorySelection: EmojiCategory
-    var searchText: String
-    var error: Error?
+struct EmojiPicker: View {
+    @Environment(\.dismiss) private var dismiss
     
-    init() {
-        self.categorySelection = .smileys
-        self.searchText = ""
+    @Binding var selectedEmoji: Emoji?
+    
+    private let emojis: [Emoji]
+    @State private var categorySelection: EmojiCategory = .smileys
+    @State private var searchText: String = ""
+    @State private var error: Error? = nil
+    
+    init(selectedEmoji: Binding<Emoji?>) {
+        self._selectedEmoji = selectedEmoji
         do {
             self.emojis = try loadEmojis()
         } catch {
@@ -17,34 +19,61 @@ class EmojiPickerViewModel {
             self.error = error
         }
     }
-}
-
-struct EmojiPicker: View {
-    @State private var viewModel = EmojiPickerViewModel()
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                ForEach(viewModel.emojis, id:\.description) { emoji in
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 55))]) {
+                ForEach(emojis, id:\.description) { emoji in
                     emojiCell(emoji)
                 }
             }
             .padding(.horizontal)
         }
+        .navigationTitle("Emojis")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Menu {
+                    Text("Selected: \(selectedEmoji?.symbol ?? "none")")
+                } label: {
+                    if let symbol = selectedEmoji?.symbol {
+                        Text(symbol)
+                            .font(.title)
+                    } else {
+                        Image(systemName: "face.dashed")
+                    }
+                }
+                .menuStyle(.button)
+                .buttonStyle(.plain)
+            }
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Confirm", systemImage: "checkmark") { dismiss() }
+            }
+        }
     }
     
     @ViewBuilder func emojiCell(_ emoji: Emoji) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(.white)
+        Button {
+            selectedEmoji = emoji
+        } label: {
             Text(emoji.symbol)
-                .font(.largeTitle)
+                .padding(5)
+                .font(.system(size: 48))
         }
-        .shadow(radius: 4)
-        .frame(width: 65, height: 65)
     }
 }
 
 #Preview {
-    EmojiPicker()
+    @Previewable @State var selectedEmoji: Emoji? = nil
+    @Previewable @State var showSheet = true
+    
+    VStack {
+        Text("Selected emoji: \(selectedEmoji?.symbol ?? "none")")
+        Button("Present Sheet") { showSheet = true }
+            .sheet(isPresented: $showSheet) {
+                NavigationStack {
+                    EmojiPicker(selectedEmoji: $selectedEmoji)
+                }
+            }
+    }
 }
