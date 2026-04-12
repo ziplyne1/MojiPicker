@@ -1,4 +1,4 @@
-struct Emoji: Decodable {
+struct Emoji: Decodable, Equatable {
     let symbol: String
     let description: String
     let category: EmojiCategory

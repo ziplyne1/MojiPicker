@@ -10,6 +10,8 @@ struct EmojiPicker: View {
     @State private var searchText: String = ""
     @State private var error: Error? = nil
     
+    @ScaledMetric(relativeTo: .largeTitle) private var cellSize: CGFloat = 55
+    
     init(selectedEmoji: Binding<Emoji?>) {
         self._selectedEmoji = selectedEmoji
         do {
@@ -22,7 +24,7 @@ struct EmojiPicker: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 55))]) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: cellSize))]) {
                 ForEach(emojis, id:\.description) { emoji in
                     emojiCell(emoji)
                 }
@@ -46,6 +48,9 @@ struct EmojiPicker: View {
                 .menuStyle(.button)
                 .buttonStyle(.plain)
             }
+            ToolbarItem(placement: .topBarLeading) {
+                Text(String(Int(cellSize)))
+            }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Confirm", systemImage: "checkmark") { dismiss() }
             }
@@ -57,8 +62,10 @@ struct EmojiPicker: View {
             selectedEmoji = emoji
         } label: {
             Text(emoji.symbol)
+                .frame(width: cellSize, height: cellSize)
                 .padding(5)
                 .font(.system(size: 48))
+                .overlay(Circle().stroke(((emoji == selectedEmoji) ? Color.accentColor : Color.clear), lineWidth: 2))
         }
     }
 }
