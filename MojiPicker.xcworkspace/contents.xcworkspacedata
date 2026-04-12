@@ -7,4 +7,7 @@
    <FileRef
       location = "group:MojiPicker demo/MojiPicker demo.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:MojiPicker/MojiPicker.xctestplan">
+   </FileRef>
 </Workspace>

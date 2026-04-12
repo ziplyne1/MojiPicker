@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "BEE00823-B916-4C0F-B5FD-FE681CC1B56B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/MojiPicker",
+        "identifier" : "MojiPickerTests",
+        "name" : "MojiPickerTests"
+      }
+    }
+  ],
+  "version" : 1
+}
