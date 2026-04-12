@@ -23,7 +23,7 @@ public struct EmojiPicker: View {
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 55))]) {
-                ForEach(emojis, id:\.description) { emoji in
+                ForEach(emojis, id:\.symbol) { emoji in
                     emojiCell(emoji)
                 }
             }
