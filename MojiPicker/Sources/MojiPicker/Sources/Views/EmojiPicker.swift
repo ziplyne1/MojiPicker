@@ -9,11 +9,16 @@ public struct EmojiPicker: View {
     @State private var categorySelection: EmojiCategory = .smileys
     @State private var searchText: String = ""
     @State private var error: Error? = nil
+    @State private var dismissOnSelection = true
     
     @ScaledMetric(relativeTo: .largeTitle) private var cellSize: CGFloat = 52
         
-    public init(selectedEmoji: Binding<Emoji?>) {
+    public init(
+        selectedEmoji: Binding<Emoji?>,
+        dismissOnSelection: Bool = true
+    ) {
         self._selectedEmoji = selectedEmoji
+        self.dismissOnSelection = dismissOnSelection
         do {
             self.emojis = try loadEmojis()
         } catch {
@@ -56,12 +61,16 @@ public struct EmojiPicker: View {
     @ViewBuilder func emojiCell(_ emoji: Emoji) -> some View {
         Button {
             selectedEmoji = emoji
+            if dismissOnSelection {
+                dismiss()
+            }
         } label: {
             // fixme)) the emojis aren't centered, they're slightly left
             Text(emoji.symbol)
                 .font(.custom("Emoji", size: 36, relativeTo: .largeTitle))
         }
         .frame(width: cellSize, height: cellSize, alignment: .center)
+        .buttonStyle(.plain)
     }
     private var toolbarMenu: some View {
         Menu {
