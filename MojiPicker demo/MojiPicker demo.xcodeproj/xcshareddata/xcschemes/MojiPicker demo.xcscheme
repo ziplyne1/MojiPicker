@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:../MojiPicker/MojiPicker.xctestplan"
+            reference = "container:../MojiPicker/Tests/MojiPicker.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
