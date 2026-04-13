@@ -9,6 +9,8 @@ public struct EmojiPicker: View {
     @State private var categorySelection: EmojiCategory = .smileys
     @State private var searchText: String = ""
     @State private var error: Error? = nil
+    
+    @ScaledMetric(relativeTo: .largeTitle) private var cellSize: CGFloat = 52
         
     public init(selectedEmoji: Binding<Emoji?>) {
         self._selectedEmoji = selectedEmoji
@@ -21,26 +23,31 @@ public struct EmojiPicker: View {
     }
     
     public var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 55))]) {
-                ForEach(emojis, id:\.symbol) { emoji in
-                    emojiCell(emoji)
+        NavigationStack {
+            ScrollView {
+                LazyVGrid(
+                    columns: [GridItem(.adaptive(minimum: cellSize), spacing: 0)],
+                    spacing: 0
+                ) {
+                    ForEach(emojis, id:\.symbol) { emoji in
+                        emojiCell(emoji)
+                    }
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-        }
-        .navigationTitle("Emojis")
-        #if os(iOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
-        .toolbar {
-            #if os(iOS)
-            ToolbarItem(placement: .topBarLeading) { toolbarMenu }
-            #else
-            ToolbarItem(placement: .automatic) { toolbarMenu }
-            #endif
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Confirm", systemImage: "checkmark") { dismiss() }
+            .navigationTitle("Emojis")
+#if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+#endif
+            .toolbar {
+#if os(iOS)
+                ToolbarItem(placement: .topBarLeading) { toolbarMenu }
+#else
+                ToolbarItem(placement: .automatic) { toolbarMenu }
+#endif
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Confirm", systemImage: "checkmark") { dismiss() }
+                }
             }
         }
     }
@@ -52,11 +59,9 @@ public struct EmojiPicker: View {
         } label: {
             // fixme)) the emojis aren't centered, they're slightly left
             Text(emoji.symbol)
-                .padding(5)
-                .font(.system(size: 48))
-                .scaleEffect((emoji == selectedEmoji) ? 1.5 : 1)
-                .overlay(Circle().stroke(((emoji == selectedEmoji) ? Color.accentColor : Color.clear), lineWidth: 2))
+                .font(.custom("Emoji", size: 44, relativeTo: .largeTitle))
         }
+        .frame(width: cellSize, height: cellSize, alignment: .center)
     }
     private var toolbarMenu: some View {
         Menu {
@@ -82,9 +87,7 @@ public struct EmojiPicker: View {
         Text("Selected emoji: \(selectedEmoji?.symbol ?? "none")")
         Button("Present Sheet") { showSheet = true }
             .sheet(isPresented: $showSheet) {
-                NavigationStack {
-                    EmojiPicker(selectedEmoji: $selectedEmoji)
-                }
+                EmojiPicker(selectedEmoji: $selectedEmoji)
             }
     }
 }
