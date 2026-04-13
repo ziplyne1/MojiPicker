@@ -59,7 +59,7 @@ public struct EmojiPicker: View {
         } label: {
             // fixme)) the emojis aren't centered, they're slightly left
             Text(emoji.symbol)
-                .font(.custom("Emoji", size: 44, relativeTo: .largeTitle))
+                .font(.custom("Emoji", size: 36, relativeTo: .largeTitle))
         }
         .frame(width: cellSize, height: cellSize, alignment: .center)
     }
