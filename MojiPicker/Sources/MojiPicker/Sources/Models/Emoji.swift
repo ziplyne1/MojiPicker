@@ -14,8 +14,12 @@ public struct Emoji: Decodable, Equatable {
 }
 
 extension Emoji {
-    func decomposed() -> [String] {
-        symbol.unicodeScalars.map { String($0) }
+    static let nonPersonModifierBases: Set<Unicode.Scalar> = ["🤝"]
+}
+
+extension Emoji {
+    func decomposed() -> [Unicode.Scalar] {
+        symbol.unicodeScalars.map { $0 }
     }
     
     public static func find(_ symbol: String) -> Emoji? {
@@ -30,15 +34,6 @@ extension Emoji {
             !($0.value >= 0x1F3FB && $0.value <= 0x1F3FF)
         })
         let foundEmoji: Emoji? = emojis.first(where: { $0.symbol == baseSymbol })
-//        // fixme)) the line below doesn't account for multiple skin tones in a single emoji
-//        if let skinToneScalar = symbol.unicodeScalars.filter({ $0.value >= 0x1F3FB && $0.value <= 0x1F3FF }).first {
-//            let skinTone: EmojiSkinTone = EmojiSkinTone(unicodeScalar: skinToneScalar)
-//            if skinTone == .neutral {
-//                return foundEmoji
-//            } else {
-//                return 
-//            }
-//        }
         
         return foundEmoji
     }

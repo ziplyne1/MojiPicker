@@ -35,15 +35,29 @@ public enum EmojiSkinTone: CaseIterable {
         }
     }
     
-    // fixme)) some emojis (like "🧑‍🤝‍🧑") don't have skin tones properly applied
+    // fixme)) some emojis (like "👯") don't have skin tones properly applied
     func apply(to emoji: Emoji) -> String {
-        if emoji.usesSkinTones == true {
-            var scalars = emoji.decomposed()
-            scalars[0] += modifier
-            return scalars.joined()
+        guard emoji.usesSkinTones == true else { return emoji.symbol }
+        
+        let scalars = emoji.decomposed()
+        var stringScalars = scalars.map { String($0) }
+        guard let firstScalar = scalars.first else { return emoji.symbol }
+        
+        if Emoji.nonPersonModifierBases.contains(firstScalar) || scalars.count(where: { $0.properties.isEmojiModifierBase }) == 1 {
+            // if it's only one modifiable emoji, modify it no matter what
+            // or if the first scalar is a non-human modifier base
+            stringScalars[0] += modifier
         } else {
-            return emoji.symbol
+            // if it's more than one modifiable emoji, only modify the people
+            for scalar in scalars {
+                if scalar.properties.isEmojiModifierBase && !Emoji.nonPersonModifierBases.contains(scalar) {
+                    if let index = stringScalars.firstIndex(of: String(scalar)) {
+                        stringScalars[index] += modifier
+                    }
+                }
+            }
         }
+        return stringScalars.joined()
     }
     
 //    init(unicodeScalar scalar: UnicodeScalar) {

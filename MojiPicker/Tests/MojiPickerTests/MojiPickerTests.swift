@@ -34,8 +34,17 @@ func emojiSkinToneApplyFunctionWorksOnThumbsUp() throws {
     #expect(EmojiSkinTone.mediumDark.apply(to: thumbsUp)  == "👍🏾")
     #expect(EmojiSkinTone.dark.apply(to: thumbsUp)        == "👍🏿")
     
+    let handshake = try #require(Emoji.find("🤝"))
+    #expect(EmojiSkinTone.light.apply(to: handshake) == "🤝🏻")
     let beardedMan = try #require(Emoji.find("🧔‍♂️"))
     #expect(EmojiSkinTone.dark.apply(to: beardedMan) == "🧔🏿‍♂️")
+    let holdingHands = try #require(Emoji.find("🧑‍🤝‍🧑"))
+    #expect(EmojiSkinTone.mediumDark.apply(to: holdingHands) == "🧑🏾‍🤝‍🧑🏾")
+    let kissing = try #require(Emoji.find("👩‍❤️‍💋‍👨"))
+    #expect(EmojiSkinTone.mediumLight.apply(to: kissing) == "👩🏼‍❤️‍💋‍👨🏼")
+    
+//    let bunnyEars = try #require(Emoji.find("👯‍♀️"))
+//    #expect(EmojiSkinTone.dark.apply(to: bunnyEars) == "👯🏿‍♀️")
     
     let fish = try #require(Emoji.find("🐟"))
     #expect(EmojiSkinTone.light.apply(to: fish) == "🐟")
