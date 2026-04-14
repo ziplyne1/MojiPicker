@@ -35,6 +35,7 @@ public enum EmojiSkinTone: CaseIterable {
         }
     }
     
+    // fixme)) some emojis (like "🧑‍🤝‍🧑") don't have skin tones properly applied
     func apply(to emoji: Emoji) -> String {
         if emoji.usesSkinTones == true {
             var scalars = emoji.decomposed()
