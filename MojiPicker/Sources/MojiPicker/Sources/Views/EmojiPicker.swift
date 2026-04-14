@@ -3,21 +3,28 @@ import SwiftUI
 public struct EmojiPicker: View {
     @Environment(\.dismiss) private var dismiss
     
-    @Binding private var selectedEmoji: Emoji?
+    @Binding private var selectedSymbol: String?
+    @State private var selectedEmoji: Emoji?
     
     private let emojis: [Emoji]
     @State private var categorySelection: EmojiCategory = .smileys
     @State private var searchText: String = ""
     @State private var error: Error? = nil
+    
+    @State private var selectedSkinTone: EmojiSkinTone = .neutral
     @State private var dismissOnSelection = true
     
     @ScaledMetric(relativeTo: .largeTitle) private var cellSize: CGFloat = 52
-        
+    
     public init(
-        selectedEmoji: Binding<Emoji?>,
+        selectedSymbol: Binding<String?>,
         dismissOnSelection: Bool = true
     ) {
-        self._selectedEmoji = selectedEmoji
+        self._selectedSymbol = selectedSymbol
+        if let symbol = selectedSymbol.wrappedValue {
+            self.selectedEmoji = Emoji.find(symbol)
+        }
+        
         self.dismissOnSelection = dismissOnSelection
         do {
             self.emojis = try loadEmojis()
@@ -55,9 +62,19 @@ public struct EmojiPicker: View {
                 }
             }
         }
+        .onChange(of: selectedEmoji) {
+            updateSelectedSymbol()
+        }
+        .onChange(of: selectedSkinTone) {
+            updateSelectedSymbol()
+        }
     }
     
-    // Child Views
+    private func updateSelectedSymbol() {
+        selectedSymbol = selectedEmoji?.symbolWithSkinTone(selectedSkinTone)
+    }
+    
+    // ----- Child Views -----
     @ViewBuilder func emojiCell(_ emoji: Emoji) -> some View {
         Button {
             selectedEmoji = emoji
@@ -66,17 +83,31 @@ public struct EmojiPicker: View {
             }
         } label: {
             // fixme)) the emojis aren't centered, they're slightly left
-            Text(emoji.symbol)
+            let displayText: String = {
+                emoji.symbolWithSkinTone(selectedSkinTone)
+            }()
+            
+            Text(displayText)
                 .font(.custom("Emoji", size: 36, relativeTo: .largeTitle))
         }
         .frame(width: cellSize, height: cellSize, alignment: .center)
         .buttonStyle(.plain)
     }
+    
     private var toolbarMenu: some View {
         Menu {
-            Text("Selected: \(selectedEmoji?.symbol ?? "none")")
+            Text("Selected: \(selectedEmoji?.symbolWithSkinTone(selectedSkinTone) ?? "none")")
+            Menu {
+                ForEach(EmojiSkinTone.allCases, id:\.self) { tone in
+                    Button(tone.previewSymbol + " " + tone.displayName) {
+                        selectedSkinTone = tone
+                    }
+                }
+            } label: {
+                Text("Skin tone: \(selectedSkinTone.previewSymbol)")
+            }
         } label: {
-            if let symbol = selectedEmoji?.symbol {
+            if let symbol = selectedEmoji?.symbolWithSkinTone(selectedSkinTone) {
                 Text(symbol)
                     .font(.title)
             } else {
@@ -88,22 +119,21 @@ public struct EmojiPicker: View {
     }
 }
 
+
 #Preview {
-    @Previewable @State var selectedEmoji: Emoji? = nil
+    @Previewable @State var selectedSymbol: String? = nil
     @Previewable @State var showSheet = true
     
     VStack {
-        Text("Selected emoji: \(selectedEmoji?.symbol ?? "none")")
+        Text("Selected emoji: \(selectedSymbol ?? "none")")
         Button("Present Sheet") { showSheet = true }
             .sheet(isPresented: $showSheet) {
-                EmojiPicker(selectedEmoji: $selectedEmoji)
+                EmojiPicker(selectedSymbol: $selectedSymbol, dismissOnSelection: false)
             }
     }
 }
 
 #Preview {
-    @Previewable @State var selectedEmoji: Emoji? = nil
-    NavigationStack {
-        EmojiPicker(selectedEmoji: $selectedEmoji)
-    }
+    @Previewable @State var selectedSymbol: String? = nil
+    EmojiPicker(selectedSymbol: $selectedSymbol, dismissOnSelection: false)
 }

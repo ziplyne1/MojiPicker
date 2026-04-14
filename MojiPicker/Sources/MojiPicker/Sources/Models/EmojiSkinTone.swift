@@ -2,7 +2,7 @@ public enum EmojiSkinTone: CaseIterable {
     case neutral
     case light, mediumLight, medium, mediumDark, dark
     
-    public var displayName: String {
+    var displayName: String {
         switch self {
         case .neutral: return "Neutral"
         case .light: return "Light"
@@ -13,7 +13,7 @@ public enum EmojiSkinTone: CaseIterable {
         }
     }
     
-    public var previewSymbol: String {
+    var previewSymbol: String {
         switch self {
         case .neutral: return "👍"
         case .light: return "👍🏻"
@@ -24,7 +24,7 @@ public enum EmojiSkinTone: CaseIterable {
         }
     }
     
-    public var modifier: String {
+    private var modifier: String {
         switch self {
         case .neutral: return ""
         case .light: return "\u{1F3FB}"
@@ -34,4 +34,21 @@ public enum EmojiSkinTone: CaseIterable {
         case .dark: return "\u{1F3FF}"
         }
     }
+    
+    func apply(to emoji: Emoji) -> String {
+        var scalars = emoji.decomposed()
+        scalars[0] += modifier
+        return scalars.joined()
+    }
+    
+//    init(unicodeScalar scalar: UnicodeScalar) {
+//        switch scalar {
+//        case "\u{1F3FB}": self = EmojiSkinTone.light
+//        case "\u{1F3FC}": self = EmojiSkinTone.mediumLight
+//        case "\u{1F3FD}": self = EmojiSkinTone.medium
+//        case "\u{1F3FE}": self = EmojiSkinTone.mediumDark
+//        case "\u{1F3FF}": self = EmojiSkinTone.dark
+//        default: self = EmojiSkinTone.neutral
+//        }
+//    }
 }

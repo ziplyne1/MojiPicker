@@ -1,14 +1,52 @@
 public struct Emoji: Decodable, Equatable {
-    public let symbol: String
+    let symbol: String
     let description: String
     let category: EmojiCategory
     let aliases: [String]
     let tags: [String]
-    let skinTones: Bool?
+    let usesSkinTones: Bool?
     
     private enum CodingKeys: String, CodingKey {
         case symbol = "emoji"
-        case skinTones = "skin_tones"
+        case usesSkinTones = "skin_tones"
         case description, category, aliases, tags
+    }
+}
+
+extension Emoji {
+    func decomposed() -> [String] {
+        symbol.unicodeScalars.map { String($0) }
+    }
+    func symbolWithSkinTone(_ tone: EmojiSkinTone) -> String {
+        if self.usesSkinTones == true {
+            return tone.apply(to: self)
+        } else {
+            return self.symbol
+        }
+    }
+    
+    public static func find(_ symbol: String) -> Emoji? {
+        var emojis: [Emoji] = []
+        do {
+            emojis = try loadEmojis()
+        } catch {
+            // todo)) handle errors
+        }
+        
+        let baseSymbol: String = String(symbol.unicodeScalars.filter {
+            !($0.value >= 0x1F3FB && $0.value <= 0x1F3FF)
+        })
+        let foundEmoji: Emoji? = emojis.first(where: { $0.symbol == baseSymbol })
+//        // fixme)) the line below doesn't account for multiple skin tones in a single emoji
+//        if let skinToneScalar = symbol.unicodeScalars.filter({ $0.value >= 0x1F3FB && $0.value <= 0x1F3FF }).first {
+//            let skinTone: EmojiSkinTone = EmojiSkinTone(unicodeScalar: skinToneScalar)
+//            if skinTone == .neutral {
+//                return foundEmoji
+//            } else {
+//                return 
+//            }
+//        }
+        
+        return foundEmoji
     }
 }
