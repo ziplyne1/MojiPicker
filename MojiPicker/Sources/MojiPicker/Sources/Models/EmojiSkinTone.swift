@@ -24,7 +24,7 @@ public enum EmojiSkinTone: CaseIterable {
         }
     }
     
-    private var modifier: String {
+    var modifier: String {
         switch self {
         case .neutral: return ""
         case .light: return "\u{1F3FB}"
@@ -58,6 +58,15 @@ public enum EmojiSkinTone: CaseIterable {
             }
         }
         return stringScalars.joined()
+    }
+    
+    static func find(from symbol: String) -> EmojiSkinTone? {
+        for tone in EmojiSkinTone.allCases {
+            if symbol.unicodeScalars.contains(where: { String($0) == tone.modifier }) {
+                return tone
+            }
+        }
+        return nil
     }
     
 //    init(unicodeScalar scalar: UnicodeScalar) {

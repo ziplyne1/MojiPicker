@@ -22,7 +22,7 @@ extension Emoji {
         symbol.unicodeScalars.map { $0 }
     }
     
-    public static func find(_ symbol: String) -> Emoji? {
+    static func find(_ symbol: String) -> Emoji? {
         var emojis: [Emoji] = []
         do {
             emojis = try loadEmojis()

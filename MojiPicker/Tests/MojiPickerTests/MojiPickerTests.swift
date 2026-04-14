@@ -13,7 +13,7 @@ func loadEmojisReturnsEmojis() throws {
 }
 
 @Test("Find emojis from symbols")
-func emojisDotFindWorks() throws {
+func findEmojisWorks() throws {
     #expect(Emoji.find("🥰")?.symbol == "🥰")
     #expect(Emoji.find("🙎🏽‍♂️")?.symbol == "🙎‍♂️") // Emoji can't hold skin tones
     #expect(Emoji.find("👩🏽‍❤️‍💋‍👨🏽")?.symbol == "👩‍❤️‍💋‍👨")
@@ -24,8 +24,21 @@ func emojisDotFindWorks() throws {
     #expect(Emoji.find("\u{200D}") == nil)
 }
 
+@Test("Find skin tone from symbol")
+func findSkinToneFromSymbolWorks() throws {
+    #expect(EmojiSkinTone.find(from: "👍") == nil)
+    #expect(EmojiSkinTone.find(from: "👍🏻") == .light)
+    #expect(EmojiSkinTone.find(from: "👍🏼") == .mediumLight)
+    #expect(EmojiSkinTone.find(from: "👍🏽") == .medium)
+    #expect(EmojiSkinTone.find(from: "👍🏾") == .mediumDark)
+    #expect(EmojiSkinTone.find(from: "👍🏿") == .dark)
+    
+    #expect(EmojiSkinTone.find(from: "🧔🏿‍♂️") == .dark)
+    #expect(EmojiSkinTone.find(from: "🧑🏾‍🤝‍🧑🏾") == .mediumDark)
+}
+
 @Test("Apply skin tones")
-func emojiSkinToneApplyFunctionWorksOnThumbsUp() throws {
+func emojiSkinToneApplyFunctionWorks() throws {
     let thumbsUp = try #require(Emoji.find("👍"))
     #expect(EmojiSkinTone.neutral.apply(to: thumbsUp)     == "👍")
     #expect(EmojiSkinTone.light.apply(to: thumbsUp)       == "👍🏻")

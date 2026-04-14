@@ -29,6 +29,9 @@ public struct EmojiPicker: View {
         self._selectedSymbol = selectedSymbol
         if let symbol = selectedSymbol.wrappedValue {
             self.selectedEmoji = Emoji.find(symbol)
+            if let tone = EmojiSkinTone.find(from: symbol) {
+                self.selectedSkinTone = tone
+            }
         }
         
         self.dismissOnSelection = dismissOnSelection
