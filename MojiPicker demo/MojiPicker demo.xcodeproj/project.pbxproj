@@ -135,6 +135,8 @@
 /* Begin XCBuildConfiguration section */
 		532B8B682F8B779200DF9424 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 532B8B4B2F8B778E00DF9424 /* MojiPicker demo */;
+			baseConfigurationReferenceRelativePath = Resources/DeveloperSettings.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -196,6 +198,8 @@
 		};
 		532B8B692F8B779200DF9424 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 532B8B4B2F8B778E00DF9424 /* MojiPicker demo */;
+			baseConfigurationReferenceRelativePath = Resources/DeveloperSettings.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -249,12 +253,13 @@
 		};
 		532B8B6B2F8B779200DF9424 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 532B8B4B2F8B778E00DF9424 /* MojiPicker demo */;
+			baseConfigurationReferenceRelativePath = Resources/DeveloperSettings.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "MojiPicker demo Icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -294,12 +299,13 @@
 		};
 		532B8B6C2F8B779200DF9424 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 532B8B4B2F8B778E00DF9424 /* MojiPicker demo */;
+			baseConfigurationReferenceRelativePath = Resources/DeveloperSettings.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "MojiPicker demo Icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;

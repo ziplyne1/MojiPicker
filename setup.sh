@@ -10,9 +10,7 @@ echo ""
 echo "What is your Developer Team ID? You can find it at developer.apple.com."
 read devTeamID
 
-mkdir -p MojiPicker\ demo/Configuration
-
-cat <<file > MojiPicker\ demo/Configuration/DeveloperSettings.xcconfig
+cat <<file > MojiPicker\ demo/MojiPicker\ demo/Resources/DeveloperSettings.xcconfig
 DEVELOPMENT_TEAM = $devTeamID
 file
 
