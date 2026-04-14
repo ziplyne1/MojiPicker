@@ -1,2 +1,2 @@
 # MojiPicker
-A drop-in SwiftUI emoji picker
+A drop-in SwiftUI emoji picker.
