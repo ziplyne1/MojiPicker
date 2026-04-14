@@ -123,7 +123,11 @@ public struct EmojiPicker: View {
             }
         }
         .menuStyle(.button)
+#if os(macOS)
+        .buttonStyle(.accessoryBar)
+#else
         .buttonStyle(.plain)
+#endif
     }
 }
 
