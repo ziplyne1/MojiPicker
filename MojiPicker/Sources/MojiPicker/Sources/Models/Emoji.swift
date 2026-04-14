@@ -17,13 +17,6 @@ extension Emoji {
     func decomposed() -> [String] {
         symbol.unicodeScalars.map { String($0) }
     }
-    func symbolWithSkinTone(_ tone: EmojiSkinTone) -> String {
-        if self.usesSkinTones == true {
-            return tone.apply(to: self)
-        } else {
-            return self.symbol
-        }
-    }
     
     public static func find(_ symbol: String) -> Emoji? {
         var emojis: [Emoji] = []

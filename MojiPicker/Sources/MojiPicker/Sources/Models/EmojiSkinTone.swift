@@ -36,9 +36,13 @@ public enum EmojiSkinTone: CaseIterable {
     }
     
     func apply(to emoji: Emoji) -> String {
-        var scalars = emoji.decomposed()
-        scalars[0] += modifier
-        return scalars.joined()
+        if emoji.usesSkinTones == true {
+            var scalars = emoji.decomposed()
+            scalars[0] += modifier
+            return scalars.joined()
+        } else {
+            return emoji.symbol
+        }
     }
     
 //    init(unicodeScalar scalar: UnicodeScalar) {

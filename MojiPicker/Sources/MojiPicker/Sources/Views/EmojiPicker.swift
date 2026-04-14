@@ -5,6 +5,12 @@ public struct EmojiPicker: View {
     
     @Binding private var selectedSymbol: String?
     @State private var selectedEmoji: Emoji?
+    private var selectedEmojiSymbolWithSkinTone: String? {
+        if let emoji = selectedEmoji {
+            return selectedSkinTone.apply(to: emoji)
+        }
+        return nil
+    }
     
     private let emojis: [Emoji]
     @State private var categorySelection: EmojiCategory = .smileys
@@ -71,7 +77,9 @@ public struct EmojiPicker: View {
     }
     
     private func updateSelectedSymbol() {
-        selectedSymbol = selectedEmoji?.symbolWithSkinTone(selectedSkinTone)
+        if let emoji = selectedEmoji {
+            selectedSymbol = selectedSkinTone.apply(to: emoji)
+        }
     }
     
     // ----- Child Views -----
@@ -84,7 +92,7 @@ public struct EmojiPicker: View {
         } label: {
             // fixme)) the emojis aren't centered, they're slightly left
             let displayText: String = {
-                emoji.symbolWithSkinTone(selectedSkinTone)
+                selectedEmojiSymbolWithSkinTone ?? "none"
             }()
             
             Text(displayText)
@@ -96,7 +104,7 @@ public struct EmojiPicker: View {
     
     private var toolbarMenu: some View {
         Menu {
-            Text("Selected: \(selectedEmoji?.symbolWithSkinTone(selectedSkinTone) ?? "none")")
+            Text("Selected: \(selectedEmojiSymbolWithSkinTone ?? "none")")
             Menu {
                 ForEach(EmojiSkinTone.allCases, id:\.self) { tone in
                     Button(tone.previewSymbol + " " + tone.displayName) {
@@ -107,7 +115,7 @@ public struct EmojiPicker: View {
                 Text("Skin tone: \(selectedSkinTone.previewSymbol)")
             }
         } label: {
-            if let symbol = selectedEmoji?.symbolWithSkinTone(selectedSkinTone) {
+            if let symbol = selectedEmojiSymbolWithSkinTone {
                 Text(symbol)
                     .font(.title)
             } else {
