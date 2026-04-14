@@ -77,6 +77,11 @@ public struct EmojiPicker: View {
         .onChange(of: selectedSkinTone) {
             updateSelectedSymbol()
         }
+        .onChange(of: selectedSymbol) {
+            if dismissOnSelection {
+                dismiss()
+            }
+        }
     }
     
     private func updateSelectedSymbol() {
@@ -89,9 +94,6 @@ public struct EmojiPicker: View {
     @ViewBuilder func emojiCell(_ emoji: Emoji) -> some View {
         Button {
             selectedEmoji = emoji
-            if dismissOnSelection {
-                dismiss()
-            }
         } label: {
             // fixme)) the emojis aren't centered, they're slightly left
             let displayText: String = {
