@@ -92,7 +92,7 @@ public struct EmojiPicker: View {
         } label: {
             // fixme)) the emojis aren't centered, they're slightly left
             let displayText: String = {
-                selectedEmojiSymbolWithSkinTone ?? "none"
+                selectedSkinTone.apply(to: emoji)
             }()
             
             Text(displayText)
