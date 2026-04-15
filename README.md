@@ -5,7 +5,7 @@ Made with 💜 by [ziplyne](https://ziplyne.dev).
 ![A GIF showing off the demonstration app](https://github.com/user-attachments/assets/b087de84-44cb-45eb-aeb0-7987a03172bc)
 
 ## Installation
-Install MojiPicker using the [Swift Package Manager](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/).
+MojiPicker is on the [Swift Package Index](https://swiftpackageindex.com/ziplyne1/MojiPicker). Install it using the [Swift Package Manager](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/).
 
 In Xcode, go to File → Add Package Dependencies…  
 Then, enter the following URL and select “Add Package.”
