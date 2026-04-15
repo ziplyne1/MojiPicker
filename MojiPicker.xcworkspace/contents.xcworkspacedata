@@ -5,6 +5,6 @@
       location = "group:">
    </FileRef>
    <FileRef
-      location = "group:MojiPicker demo/MojiPicker demo.xcodeproj">
+      location = "group:Demo App/MojiPicker demo.xcodeproj">
    </FileRef>
 </Workspace>
