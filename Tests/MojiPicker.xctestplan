@@ -14,7 +14,7 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:..\/MojiPicker",
+        "containerPath" : "container:..",
         "identifier" : "MojiPickerTests",
         "name" : "MojiPickerTests"
       }
