@@ -1,6 +1,6 @@
 # MojiPicker
 A drop-in SwiftUI emoji picker.  
-Made with 💜 by [ziplyne](https://ziplyne.dev/projects/MojiPicker).
+Made with 💜 by [ziplyne](https://ziplyne.dev).
 
 ![A GIF showing off the demonstration app](https://github.com/user-attachments/assets/b087de84-44cb-45eb-aeb0-7987a03172bc)
 
