@@ -6,6 +6,7 @@ on:
     - 'main'
   pull_request:
 
+# fixme)) macos version and xcode version shouldn't be hardcoded
 jobs:
   test:
     runs-on: macos-26
