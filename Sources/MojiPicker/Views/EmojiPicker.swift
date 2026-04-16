@@ -12,13 +12,17 @@ public struct EmojiPicker: View {
         return nil
     }
     
-    private let emojis: [Emoji]
-    @State private var categorySelection: EmojiCategory = .smileys
-    @State private var searchText: String = ""
-    @State private var error: Error? = nil
-    
     @State private var selectedSkinTone: EmojiSkinTone = .neutral
     @State private var dismissOnSelection = true
+    
+    private let emojis: [Emoji]
+    
+    @State private var filteredEmojis: [Emoji] = []
+    @State private var selectedCategory: EmojiCategory? = nil
+    @State private var searchText: String = ""
+    @State private var selectSearchField: Bool = false
+    
+    @State private var error: Error? = nil
     
     @ScaledMetric(relativeTo: .largeTitle) private var cellSize: CGFloat = 52
     
@@ -33,7 +37,6 @@ public struct EmojiPicker: View {
                 self.selectedSkinTone = tone
             }
         }
-        
         self.dismissOnSelection = dismissOnSelection
         do {
             self.emojis = try loadEmojis()
@@ -50,7 +53,7 @@ public struct EmojiPicker: View {
                     columns: [GridItem(.adaptive(minimum: cellSize), spacing: 0)],
                     spacing: 0
                 ) {
-                    ForEach(emojis, id:\.symbol) { emoji in
+                    ForEach(filteredEmojis, id:\.symbol) { emoji in
                         emojiCell(emoji)
                     }
                 }
@@ -70,25 +73,31 @@ public struct EmojiPicker: View {
                     Button("Confirm", systemImage: "checkmark") { dismiss() }
                 }
             }
+            .searchable(text: $searchText, isPresented: $selectSearchField)
+            .safeAreaBar(edge: .bottom) { categoryPicker }
         }
-        .onChange(of: selectedEmoji) {
-            updateSelectedSymbol()
-        }
-        .onChange(of: selectedSkinTone) {
-            updateSelectedSymbol()
-        }
+        
         .onChange(of: selectedSymbol) {
             if dismissOnSelection {
                 dismiss()
             }
         }
+        
+        .onChange(of: selectedEmoji)    { updateSelectedSymbol() }
+        .onChange(of: selectedSkinTone) { updateSelectedSymbol() }
+        
+        .onChange(of: selectedCategory) { filterEmojis() }
+        .onChange(of: searchText)       { filterEmojis() }
+        
+        .onChange(of: selectSearchField) {
+            if selectSearchField == true {
+                selectedCategory = nil
+            }
+        }
+        
+        .onAppear { filterEmojis() }
     }
     
-    private func updateSelectedSymbol() {
-        if let emoji = selectedEmoji {
-            selectedSymbol = selectedSkinTone.apply(to: emoji)
-        }
-    }
     
     // ----- Child Views -----
     @ViewBuilder func emojiCell(_ emoji: Emoji) -> some View {
@@ -133,6 +142,75 @@ public struct EmojiPicker: View {
 #else
         .buttonStyle(.plain)
 #endif
+    }
+    
+    private var categoryPicker: some View {
+        HStack(spacing: 0) {
+            ForEach(EmojiCategory.allCases, id: \.self) { category in
+                Button {
+                    if category == selectedCategory {
+                        selectedCategory = nil
+                    } else {
+                        selectedCategory = category
+                    }
+                } label: {
+                    let imageName: String = {
+                        if category == selectedCategory {
+                            return category.sfSymbol + ".fill"
+                        } else {
+                            return category.sfSymbol
+                        }
+                    }()
+                    
+                    Image(systemName: imageName)
+                        .contentTransition(.symbolEffect(.replace))
+                        .frame(width: 32, height: 32)
+                        .padding(.horizontal, 2)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(.top, 25)
+    }
+    
+    
+    // ----- Functions -----
+    private func filterEmojis() {
+        filteredEmojis = emojis.filter { emoji in
+            let satisfiesCategory: Bool = {
+                if selectedCategory == nil {
+                    return true
+                } else if selectedCategory == emoji.category {
+                    return true
+                } else {
+                    return false
+                }
+            }()
+            
+            let satisfiesSearchText: Bool = {
+                let query = searchText.lowercased()
+                
+                // match search text
+                if query == "" { return true }
+                let matchableText = (
+                    emoji.symbol +
+                    emoji.description +
+                    emoji.aliases.joined() +
+                    emoji.tags.joined()
+                ).lowercased()
+                if matchableText.contains(query) { return true }
+                
+                return false
+            }()
+            
+            return satisfiesCategory && satisfiesSearchText
+        }
+    }
+    
+    private func updateSelectedSymbol() {
+        if let emoji = selectedEmoji {
+            selectedSymbol = selectedSkinTone.apply(to: emoji)
+        }
     }
 }
 

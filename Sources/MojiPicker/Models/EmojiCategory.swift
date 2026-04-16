@@ -8,4 +8,18 @@ enum EmojiCategory: String, Decodable, CaseIterable {
     case objects = "Objects"
     case symbols = "Symbols"
     case flags = "Flags"
+    
+    var sfSymbol: String {
+        switch self {
+        case .smileys: "face.smiling"
+        case .people: "person"
+        case .nature: "leaf"
+        case .food: "cup.and.saucer"
+        case .travel: "car"
+        case .activities: "basketball"
+        case .objects: "lightbulb"
+        case .symbols: "star"
+        case .flags: "flag"
+        }
+    }
 }
