@@ -100,7 +100,7 @@ public struct EmojiPicker: View {
     
     
     // ----- Child Views -----
-    @ViewBuilder func emojiCell(_ emoji: Emoji) -> some View {
+    @ViewBuilder private func emojiCell(_ emoji: Emoji) -> some View {
         Button {
             selectedEmoji = emoji
         } label: {
