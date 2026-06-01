@@ -1,6 +1,6 @@
 import Foundation
 
-enum EmojiLoaderError: Error {
+private enum EmojiLoaderError: Error {
     case fileNotFound
     case decodingFailed
 }

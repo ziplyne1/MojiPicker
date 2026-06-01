@@ -1,4 +1,4 @@
-public enum EmojiSkinTone: CaseIterable {
+enum EmojiSkinTone: CaseIterable {
     case neutral
     case light, mediumLight, medium, mediumDark, dark
     
@@ -24,7 +24,7 @@ public enum EmojiSkinTone: CaseIterable {
         }
     }
     
-    var modifier: String {
+    private var modifier: String {
         switch self {
         case .neutral: return ""
         case .light: return "\u{1F3FB}"
