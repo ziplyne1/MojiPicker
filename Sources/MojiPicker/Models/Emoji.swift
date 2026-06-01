@@ -1,5 +1,5 @@
 struct Emoji: Decodable, Equatable {
-    let symbol: String
+    public let symbol: String
     let description: String
     let category: EmojiCategory
     let aliases: [String]
